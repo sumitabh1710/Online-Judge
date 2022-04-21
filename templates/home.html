@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock title %}
+
+{%block body%}
+
+<div class='container'>
+  <div class="list-group " style='margin: 20px 20px;'>
+    {%for variable in questions%}
+    <form method="POST">
+    <a href="/problem/{{variable.id}}" class="list-group-item list-group-item-action" style='margin: 20px 20px;'>{{variable.problem_name}}</a>
+    </form>
+    {% endfor %} 
+  </div>
+
+{%endblock body%}
