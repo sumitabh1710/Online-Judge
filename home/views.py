@@ -17,19 +17,24 @@ def problem(request, variable_id):
     question = problems.objects.get(id=variable_id)
     type_comp = ['None', 'Python', 'C++', 'Java']
     context = {
+        'var0': question.id,
         'var1': question.problem_statement,
         'var2': type_comp
     }
     return render(request, 'problem.html', context)
 
-def submit(request):
+def submit(request, variable_id):
     if request.POST['type'] == 'Python':
-        output = compile_python(request)
+        output = compile_python(request, variable_id)
     if request.POST['type'] == 'C++':
-        output = compile_c(request)
+        output = compile_c(request, variable_id)
     if request.POST['type'] == 'Java':
-        output = compile_java(request)
-    return HttpResponse(output)
+        output = compile_java(request, variable_id)
+    context = {
+        'output' : output,
+    }
+    
+    return render(request, 'leaderboard.html', context)
 
 def login(request):
     return render(request, 'login.html')

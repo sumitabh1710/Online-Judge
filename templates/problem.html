@@ -3,14 +3,12 @@
 {% block title %} Problem {% endblock title %}
 
 {%block body%}
-
+<form method='post' action="submit">
+{% csrf_token %}
 <div class="container py-4">
-    {{var1}}
+    <label name="problem_statement">{{var0}}. {{var1}}</label>  
 </div>
-
 <div class='container my-4'>
-    <form method='post' action='/submit'>
-    {% csrf_token %}
         <select class="form-select" aria-label="Default select example" name="type">
             {%for variable in var2%}
             <option name="Variable" id="{{forloop.counter}}" value="{{variable}}">{{variable}}</option>
@@ -18,11 +16,10 @@
         </select>
         <div class='form-group my-4'> 
             <label for="code">Write your code here</label>
-            <textarea class="form-control" id="code" name='code' rows="15"></textarea>
+            <textarea class="form-control" id="code" name="code" rows="15"></textarea>
         </div>
         <button class='btn btn-primary' type='submit'>Submit</button>
-        </form>
-        
+          
 </div>
-
+</form>
 {%endblock body%}
