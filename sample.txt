@@ -1,7 +1,0 @@
-print(s)
-print(s)
-print(a)
-print(b)print(a)
-print(b)print(a)
-print(b)print(a)
-print(b)

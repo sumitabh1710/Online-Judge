@@ -7,9 +7,13 @@
 <div class='container'>
   <div class="list-group " style='margin: 20px 20px;'>
     {%for variable in questions%}
+    <div class='container my-3'>
     <form method="POST">
-    <a href="/problem/{{variable.id}}" class="list-group-item list-group-item-action" style='margin: 20px 20px;'>{{variable.problem_name}}</a>
+    <a href="/problem/{{variable.id}}" class="list-group-item list-group-item-action"><i><b>&rarr; {{variable.problem_name}}</b></i></a>
     </form>
+
+  </div>
+  <hr>
     {% endfor %} 
   </div>
 

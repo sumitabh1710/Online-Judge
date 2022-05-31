@@ -4,6 +4,35 @@
 
 {%block body%}
 
-<label class='container py-4'>{{output}}<label/>
+<div class="list-group " style='margin: 20px 20px;'>
+
+    <body align='center'>
+
+        <h1>Leaderboard</h1>
+        <form>
+            <button formaction="home">Return to problemset</button>
+        </form>
+        <table id="submissions">
+            <thead>
+                <tr>
+                    <th>Verdict</th>
+                    <th>Problem</th>
+                    <th>Submitted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for res in result %}
+                <tr>
+                    <td>{{res.verdict}}</td>
+                    <td>{{res.problem_01.problem_name}}</a></td>
+                    <td>{{res.submittedAt}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</div>
+
+
 
 {%endblock body%}

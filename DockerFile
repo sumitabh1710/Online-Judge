@@ -1,0 +1,8 @@
+FROM python
+
+WORKDIR D:\Code\Django\Onlinejudge
+
+COPY temp.py ./
+
+CMD ["cat inp.txt | python temp.py"]
+

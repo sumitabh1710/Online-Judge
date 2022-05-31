@@ -6,7 +6,7 @@
 <form method='post' action="submit">
 {% csrf_token %}
 <div class="container py-4">
-    <label name="problem_statement">{{var0}}. {{var1}}</label>  
+    <pre name="problem_statement">{{var0}}. {{var1}}</pre>  
 </div>
 <div class='container my-4'>
         <select class="form-select" aria-label="Default select example" name="type">
@@ -15,7 +15,7 @@
             {% endfor %}
         </select>
         <div class='form-group my-4'> 
-            <label for="code">Write your code here</label>
+            <label for="code"><i>Write your code here</i></label>
             <textarea class="form-control" id="code" name="code" rows="15"></textarea>
         </div>
         <button class='btn btn-primary' type='submit'>Submit</button>

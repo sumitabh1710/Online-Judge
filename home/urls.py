@@ -8,6 +8,7 @@ urlpatterns = [
     path('problem/<int:variable_id>/', views.problem, name='problem'),
     path('problem/<int:variable_id>/submit', views.submit, name='submit'),
     path('login', views.login, name='login'),
-    path('register', views.register, name='register')
+    path('register', views.register, name='register'),
+    path('logout', views.logout, name='logout')
 ]
 

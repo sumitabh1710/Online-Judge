@@ -1,9 +1,10 @@
 from multiprocessing import context
+from django.contrib import messages
 from re import template
 from django.shortcuts import render, HttpResponse, redirect
 from django.template import loader
-from .models import problems
-from compiler.views import compile_c, compile_java, compile_python
+from .models import problems, Verdict
+from compiler.views import compile_c, compile_python
 from django.contrib.auth.models import User, auth
 
 def home(request):
@@ -30,14 +31,26 @@ def submit(request, variable_id):
         output = compile_c(request, variable_id)
     if request.POST['type'] == 'Java':
         output = compile_java(request, variable_id)
+    recent_submissions = Verdict.objects.all().order_by('-submittedAt')[:10]
     context = {
         'output' : output,
+        "result": recent_submissions
     }
-    
     return render(request, 'leaderboard.html', context)
 
 def login(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/home')
+        else:
+            messages.info(request, 'Invalid Credentials')
+            return redirect('login')
+    else:
+        return render(request, 'login.html')
 
 def register(request):
     if request.method == 'POST':
@@ -48,17 +61,25 @@ def register(request):
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         if password1 == password2:
-            if password1 == '':
-                return HttpResponse('Please enter a password')
+            if User.objects.filter(username=user_name).exists():
+                messages.info(request, 'Username Taken')
+                return redirect('register')
             elif User.objects.filter(email=email).exists():
-                return HttpResponse('Email already exists...')
+                messages.info(request, 'email Taken')
+                return redirect('register')
             else:
                 user = User.objects.create_user(username=user_name, first_name=first_name, last_name=last_name, email=email, password= password1)
                 user.save()
-            return HttpResponse('User saved successfully...')
+                print('User created')
+                return redirect('login')
         else:
-            return HttpResponse('Password not matching...')
-        redirect('/')
+            messages.info(request, 'password not matching...')
+            return redirect('register')
+        return redirect('home')
     else:    
-        return HttpResponse('you are registered')
+        return render(request, 'register.html')
+    
+def logout(request):
+    auth.logout(request)
+    return redirect('home')
 

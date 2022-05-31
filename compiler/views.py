@@ -10,22 +10,29 @@ def compile_python(request, variable_id):
     code = request.POST['code']
     for test in tests:
         input = test.testcase
+        print(input)
+        inp_file = open('inp.txt', 'w')
+        print('file opened')
         expected = test.output
+        inp_file.write(input)
+        inp_file.close()
+        print(expected)
         try:
             file = open('temp.py', 'w')
             file.write(code)
             file.close()
-            output = subprocess.run([sys.executable, 'temp.py'], capture_output=True, encoding='ascii', input=input, timeout=1)
+            subprocess.run('docker build -f DockerFile -t python:0.2 .', shell=True)
+            output = subprocess.run('docker run python:0.2', shell=True, stdout=subprocess.PIPE, check=True)
             actual = output.stdout
+            print(actual.decode('utf-8'))
             if (output.returncode != 0):
                 verdict = Verdict.COMPILATION_ERROR
             elif actual == expected:
                 verdict = Verdict.Success
-            elif subprocess.TimeoutExpired:
-                verdict = Verdict.Time_Limit_Exceeded
             else:
                 verdict = Verdict.Wrong_Output
         except Exception as e:
+            print(e)
             verdict = Verdict.Runtime_Error
     sol = Verdict(
         problem_01 = problems.objects.get(pk = variable_id),
@@ -48,6 +55,3 @@ def compile_c(request, variable_id):
     except Exception as e:
         output = e
     return output
-
-def compile_java(request, variable_id):
-    pass
