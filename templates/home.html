@@ -3,17 +3,14 @@
 {% block title %} Home {% endblock title %}
 
 {%block body%}
-
 <div class='container'>
-  <div class="list-group " style='margin: 20px 20px;'>
+  <div class="list-group " >
     {%for variable in questions%}
-    <div class='container my-3'>
-    <form method="POST">
-    <a href="/problem/{{variable.id}}" class="list-group-item list-group-item-action"><i><b>&rarr; {{variable.problem_name}}</b></i></a>
+    <div class='container my-3' style='width:1000px'>
+    <form method="POST" style="height:80px; border-radius: 20px; ; box-shadow: 2.5px 5px rgb(146, 145, 145)">
+    <a href="/problem/{{variable.id}}" class="list-group-item" id='problem_name_list' style='height:80px; color:black'><i><b>&rarr; {{variable.problem_name}}</b></i></a>
     </form>
-
   </div>
-  <hr>
     {% endfor %} 
   </div>
 

@@ -4,28 +4,24 @@
 
 {%block body%}
 
-<div class="list-group " style='margin: 20px 20px;'>
+<div class="list-group" style='margin: 20px 20px;'>
 
-    <body align='center'>
-
-        <h1>Leaderboard</h1>
-        <form>
-            <button formaction="home">Return to problemset</button>
-        </form>
-        <table id="submissions">
+    <body>
+        <h1 style="text-align:center;margin-bottom: 50px;font-size: 45px;"><i> <b></b>Leaderboard</b> </i></h1>
+        <table id="submissions" style="width:100%; border: 3px solid;">
             <thead>
                 <tr>
-                    <th>Verdict</th>
-                    <th>Problem</th>
-                    <th>Submitted At</th>
+                    <th style="text-align:center; border: 2px solid; height: 50px; padding: 5px;background-color: #04AA6D; color: white;">Verdict</th>
+                    <th style='text-align:center; border: 2px solid; height: 50px; padding: 5px;background-color: #04AA6D; color: white;'>Problem</th>
+                    <th style='text-align:center; border: 2px solid; height: 50px; padding: 5px;background-color: #04AA6D; color: white;'>Submitted At</th>
                 </tr>
             </thead>
             <tbody>
                 {% for res in result %}
                 <tr>
-                    <td>{{res.verdict}}</td>
-                    <td>{{res.problem_01.problem_name}}</a></td>
-                    <td>{{res.submittedAt}}</td>
+                    <td style="text-align:center; border: 1px solid; padding: 5px;">{{res.verdict}}</td>
+                    <td style="text-align:center; border: 1px solid; padding: 5px;">{{res.problem_01.problem_name}}</a></td>
+                    <td style="text-align:center; border: 1px solid; padding: 5px;">{{res.submittedAt}}</td>
                 </tr>
                 {% endfor %}
             </tbody>

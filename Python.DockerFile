@@ -4,5 +4,5 @@ WORKDIR D:\Code\Django\Onlinejudge
 
 COPY temp.py ./
 
-CMD ["cat inp.txt | python temp.py"]
+CMD ["python", "temp.py"]
 

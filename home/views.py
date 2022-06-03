@@ -29,8 +29,6 @@ def submit(request, variable_id):
         output = compile_python(request, variable_id)
     if request.POST['type'] == 'C++':
         output = compile_c(request, variable_id)
-    if request.POST['type'] == 'Java':
-        output = compile_java(request, variable_id)
     recent_submissions = Verdict.objects.all().order_by('-submittedAt')[:10]
     context = {
         'output' : output,

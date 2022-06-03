@@ -12,19 +12,18 @@ def compile_python(request, variable_id):
         input = test.testcase
         print(input)
         inp_file = open('inp.txt', 'w')
-        print('file opened')
         expected = test.output
         inp_file.write(input)
         inp_file.close()
-        print(expected)
+        print(expected, type(expected))
         try:
             file = open('temp.py', 'w')
             file.write(code)
             file.close()
-            subprocess.run('docker build -f DockerFile -t python:0.2 .', shell=True)
-            output = subprocess.run('docker run python:0.2', shell=True, stdout=subprocess.PIPE, check=True)
-            actual = output.stdout
-            print(actual.decode('utf-8'))
+            file = open('inp.txt', 'r').read()
+            subprocess.run('docker build -f Python.DockerFile -t python:0.2 .', shell=True)
+            output = output = subprocess.run('docker run -i python:0.2', shell=True,  stdout=subprocess.PIPE,check=True,input=file.encode())
+            actual = output.stdout.decode().strip('\n')
             if (output.returncode != 0):
                 verdict = Verdict.COMPILATION_ERROR
             elif actual == expected:
